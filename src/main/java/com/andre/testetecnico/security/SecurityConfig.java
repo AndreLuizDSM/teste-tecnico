@@ -41,11 +41,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Desativa proteção CSRF para APIs REST (não aplicável a APIs que não mantêm estado)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/usuario/login").permitAll() // Permite acesso ao// endpoint// de login// sem autenticação
-                        .requestMatchers(HttpMethod.POST, "/usuario").permitAll() // Permite acesso ao endpoint POST /usuario sem autenticação
-                        .requestMatchers(HttpMethod.GET,"/usuario/endereco/**").permitAll()
-                        .requestMatchers("/usuario/**").authenticated() // Requer autenticação para qualquer endpoint que comece com /usuario/
+                        .requestMatchers(HttpMethod.POST,"/user/login").permitAll() // Permite acesso ao
+                        // endpoint de login sem autenticação
+                        .requestMatchers(HttpMethod.POST, "/user").permitAll() // Permite acesso ao endpoint POST
+                        // /user sem autenticação
+                        .requestMatchers( HttpMethod.GET,"/user/**").authenticated() // Requer autenticaçãopara qualquer endpoint que comece com /user/
+                        .requestMatchers("/task/**").authenticated()
                         .anyRequest().authenticated() // Requer autenticação para todas as outras requisições
                 )
                 .sessionManagement(session -> session

@@ -48,6 +48,7 @@ jobs:
         DB_URL: jdbc:postgresql://localhost:5432/teste_tecnico
         DB_USERNAME: postgres
         DB_PASSWORD: 1234
+        JWT_SECRET: c2VuaGEtbXVpdG8tZ3JhbmRlLXBhcmEtZGVzZW52b2x2aW1lbnRvLWxvY2FsLWUtdGVzdGVz
       run: ./gradlew build
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
