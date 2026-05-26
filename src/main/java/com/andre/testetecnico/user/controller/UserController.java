@@ -1,5 +1,7 @@
 package com.andre.testetecnico.user.controller;
 
+import com.andre.testetecnico.business.userDtos.UserRequestDTO;
+import com.andre.testetecnico.business.userDtos.UserResponseDTO;
 import com.andre.testetecnico.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
