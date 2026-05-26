@@ -21,14 +21,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-// Define a classe JwtRequestFilter, que estende OncePerRequestFilter
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    // Define propriedades para armazenar instâncias de JwtUtil e UserDetailsService
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
-    // Construtor que inicializa as propriedades com instâncias fornecidas
     public JwtRequestFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
@@ -78,7 +75,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     private String buildError(String message, int status, String path, String erro) throws JsonProcessingException {
-        // Criar um erroDTO para passar detalhadamente o erro com o Token JWT
         ErrorResponseDTO errorResponseDTO = ErrorResponseDTO.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(status)

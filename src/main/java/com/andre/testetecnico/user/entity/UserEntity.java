@@ -32,7 +32,7 @@ public class UserEntity implements UserDetails {
     private String email;
 
     @Column(name = "password")
-    private String senha;
+    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<TaskEntity> tasks;
@@ -45,7 +45,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return senha;
+        return password;
     }
 
     @Override

@@ -20,13 +20,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // Instâncias de JwtUtil e UserDetailsService injetadas pelo Spring
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
-    public static final String SECURITY_SCHEME = "bearerAuth";
 
-
-    // Construtor para injeção de dependências de JwtUtil e UserDetailsService
     public SecurityConfig(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
@@ -58,7 +54,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // Configura o PasswordEncoder para criptografar senhas usando BCrypt
+    // Configura o PasswordEncoder para criptografar senha usando BCrypt
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // Retorna uma instância de BCryptPasswordEncoder
