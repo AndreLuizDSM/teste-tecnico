@@ -7,9 +7,9 @@ import jakarta.annotation.Nullable;
 import java.util.List;
 
 public record UserResponseDTO (
-
+        String id,
         String email,
-        String nome,
+        String name,
         @Nullable
         List<TaskResponseDTO> tasks
 ){

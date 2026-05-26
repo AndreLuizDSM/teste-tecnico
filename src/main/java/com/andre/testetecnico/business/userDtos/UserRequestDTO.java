@@ -4,11 +4,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record UserRequestDTO(
-        @NotBlank @Email
+        @NotBlank(message = "Email é obrigatório")
+        @Email(message = "Email deve conter @")
         String email,
-        @NotBlank
+        @NotBlank(message = "Nome é obrigatório")
         String name,
-        @NotBlank
+        @NotBlank(message = "Senha é obrigatório")
         String password
 
 ) {

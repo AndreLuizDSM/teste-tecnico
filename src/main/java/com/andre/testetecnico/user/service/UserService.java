@@ -1,5 +1,7 @@
 package com.andre.testetecnico.user.service;
 
+import com.andre.testetecnico.business.exceptions.BadRequestException;
+import com.andre.testetecnico.business.exceptions.ResourceNotFoundException;
 import com.andre.testetecnico.business.mapper.UserMapper;
 import com.andre.testetecnico.business.userDtos.UserRequestDTO;
 import com.andre.testetecnico.business.userDtos.UserResponseDTO;
@@ -19,24 +21,28 @@ public class UserService {
 
     public UserResponseDTO saveUser(UserRequestDTO dto){
         if (repository.existsByEmail(dto.email())) {
-            throw new IllegalArgumentException("Conta já existe " + dto.email());
+            throw new BadRequestException("Conta já existe " + dto.email());
         }
+
         log.info("Email criado: " + dto.email());
         return mapper.entityToResponse(repository.save(mapper.requestToEntity(dto)));
     }
 
+    public String login()
+
     public UserResponseDTO returnUser(String email){
         log.info("Procurando email: " + email);
         UserEntity entity = repository.findByEmail(email).orElseThrow(
-                ()-> new IllegalArgumentException("Usuário não encontrado " + email)
+                ()-> new ResourceNotFoundException("Usuário não encontrado " + email)
         );
+
         log.info("Usuário retornado: " + entity);
         return mapper.entityToResponse(entity);
     }
 
     public void deleteUser(String email){
         if(!repository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Usuário não encontrado " + email);
+            throw new ResourceNotFoundException("Usuário não encontrado " + email);
         }
         log.info("Email para delete: "+ email);
         repository.deleteByEmail(email);
