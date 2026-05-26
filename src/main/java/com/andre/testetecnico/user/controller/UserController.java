@@ -1,5 +1,6 @@
 package com.andre.testetecnico.user.controller;
 
+import com.andre.testetecnico.business.userDtos.UserLoginDTO;
 import com.andre.testetecnico.business.userDtos.UserRequestDTO;
 import com.andre.testetecnico.business.userDtos.UserResponseDTO;
 import com.andre.testetecnico.user.service.UserService;
@@ -17,8 +18,13 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> salvarUsuario(@Valid @RequestBody UserRequestDTO usuarioDTO) {
-        return ResponseEntity.ok(service.saveUser(usuarioDTO));
+    public ResponseEntity<UserResponseDTO> salvarUsuario(@Valid @RequestBody UserRequestDTO dto) {
+        return ResponseEntity.ok(service.saveUser(dto));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginDTO dto){
+        return ResponseEntity.ok(service.loginUser(dto));
     }
 
     @GetMapping
