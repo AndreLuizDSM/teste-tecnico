@@ -4,11 +4,13 @@ import com.andre.testetecnico.business.taskDtos.TaskRequestDTO;
 import com.andre.testetecnico.business.taskDtos.TaskResponseDTO;
 import com.andre.testetecnico.task.repository.ITaskRepositoryJpa;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class TaskService {
