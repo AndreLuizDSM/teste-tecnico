@@ -38,6 +38,7 @@ public class UserEntity implements UserDetails {
     private List<TaskEntity> tasks;
 
     // Métodos do user details para autenticação do usuário.
+    // A autenticação será feita pelo email do usuário
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

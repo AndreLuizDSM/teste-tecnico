@@ -157,7 +157,7 @@ class UserServiceTest {
         verifyNoMoreInteractions(repository);
     }
 
-    // ===================== deleteUser =====================
+                    // deleteUser
 
     @Test
     void deleteUserSuccess() {
