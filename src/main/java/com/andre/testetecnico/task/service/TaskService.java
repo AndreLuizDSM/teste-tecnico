@@ -28,11 +28,12 @@ public class TaskService {
     private final JwtUtil jwtUtil;
 
     public TaskResponseDTO saveTask(TaskRequestDTO dto, String token) {
-        String email = jwtUtil.extrairEmailToken(token.substring(7));
-        log.info("Criando tarefa para o usuário: "+ email);
+        String email = getEmailFromToken(token);
+        log.info("Criando tarefa para o usuário: " + email);
 
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UnauthorizedException("Usuário não encontrado: " + email));
+
 
         TaskEntity task = mapper.requestToEntity(dto);
         task.setUser(user);
@@ -43,7 +44,7 @@ public class TaskService {
     }
 
     public List<TaskResponseDTO> findTask(String token) {
-        String email = jwtUtil.extrairEmailToken(token.substring(7));
+        String email = getEmailFromToken(token);
         log.info("Buscando tarefas do usuário: " + email);
 
         UserEntity user = userRepository.findByEmail(email)
@@ -74,9 +75,12 @@ public class TaskService {
 
         mapper.updateEntity(dto, task);
 
-        mapper.entityToResponse(taskRepository.save(task));
         log.info("Tarefa atualizada com sucesso: " + id);
-
         return mapper.entityToResponse(taskRepository.save(task));
+    }
+
+    //Extrair email do token
+    private String getEmailFromToken(String token){
+        return jwtUtil.extrairEmailToken(token.substring(7));
     }
 }

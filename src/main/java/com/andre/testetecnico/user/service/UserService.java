@@ -33,11 +33,14 @@ public class UserService {
     private final JwtUtil jwtUtil;
 
     public UserResponseDTO saveUser(UserRequestDTO dto){
+
         if (repository.existsByEmail(dto.email())) {
             throw new BadRequestException("Conta já existe " + dto.email());
         }
+
         UserEntity entity = mapper.requestToEntity(dto);
         entity.setPassword(passwordEncoder.encode(dto.password()));
+
         log.info("Email criado: " + dto.email());
         return mapper.entityToResponse(repository.save(entity));
     }
@@ -45,12 +48,13 @@ public class UserService {
     public String loginUser(UserLoginDTO userDto){
         try {
 
-            //AuthenticationManager compara os valores de domain com o do banco de dados , e usa loadByUserName
-            //authentication é o return de userDetails do loadByUserName
+            //AuthenticationManager compara os valores de userDto com o do banco de dados,usando loadByUserName
+            //de baixo dos panos
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDto.email(), userDto.password())
             );
 
+            // Se o userDto for incorreto , a requisição cairá no catch antes do return.
             return "Bearer " + jwtUtil.generateToken(authentication.getName());
 
         } catch (BadCredentialsException | UsernameNotFoundException e) {
@@ -59,6 +63,7 @@ public class UserService {
     }
 
     public UserResponseDTO returnUser(String email){
+
         log.info("Procurando email: " + email);
         UserEntity entity = repository.findByEmail(email).orElseThrow(
                 ()-> new ResourceNotFoundException("Usuário não encontrado " + email)
@@ -69,9 +74,11 @@ public class UserService {
     }
 
     public void deleteUser(String email){
+
         if(!repository.existsByEmail(email)) {
             throw new ResourceNotFoundException("Usuário não encontrado " + email);
         }
+
         log.info("Email para delete: "+ email);
         repository.deleteByEmail(email);
     }
