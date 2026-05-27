@@ -49,25 +49,33 @@ export class Task {
     // Pega as tasks e coloca dentro do signal atualizado.
     this.http.get<TaskResponse[]>(`${this.apiUrl}task`, { headers: this.getHeaders()  })
       .subscribe({
-        next: tasks => this._task.set(tasks),
-        error: () => this._task.set([])
+        next: tasks => {this._task.set(tasks),
+                        console.log('método get com sucesso')
+        },
+        error: () => {this._task.set([]),
+                    console.log('método get com sucesso')
+        }
       })
   }
 
 
-  createTask(body: TaskPayload, token: string): Observable<TaskResponse> {
+  createTask(body: TaskPayload): Observable<TaskResponse[]> {
 
-
-    return this.http.post<TaskResponse>(`${this.apiUrl}task`, body, { headers: this.getHeaders() })
+    // Cria task e faz o getTask para atualizar o signal e a tabela
+    return this.http.post<TaskResponse[]>(`${this.apiUrl}task`, body, { headers: this.getHeaders() })
+    .pipe(tap(task => {this.getTask() ,
+                      console.log('Task criada: ' , task)
+    }))
   }
 
 
 
   deleteTask(id: string): Observable<TaskResponse> {
-
-
+  console.log('Task de id ' , id , ' será deletada')
+    // Deleta task e faz o getTask para atualizar signal e a tabela
     return this.http.delete<TaskResponse>(`${this.apiUrl}task?id=${id}`, { headers: this.getHeaders() })
-      .pipe(tap(task => { this.getTask() }))
+      .pipe(tap(task => {this.getTask() ,
+                      console.log('Task deletada com sucesso ') }))
   }
 
   // Method getHeaders() para Authorization header
