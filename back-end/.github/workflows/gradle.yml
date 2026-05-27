@@ -41,9 +41,10 @@ jobs:
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
     
     - name: Permissão ao Gradle
-      run: chmod +x gradlew
+      run: chmod +x back-end/gradlew
 
     - name: Build with Gradle Wrapper
+      working-directory: back-end
       env:
         DB_URL: jdbc:postgresql://localhost:5432/teste_tecnico
         DB_USERNAME: postgres
