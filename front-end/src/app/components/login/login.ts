@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -21,7 +21,7 @@ import { Auth } from '../../services/auth';
     RouterLink
   ],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrl: './login.scss',
 })
 export class Login {
 
@@ -49,7 +49,7 @@ export class Login {
 
         // Salva o token
         this.authService.saveToken(response),
-        console.log("Usuário logado ")
+        console.log("Usuário logado , token salvo no storage como: auth_token")
 
         // Usa o método GET da service
         this.userService.getUserByEmail(response).subscribe({

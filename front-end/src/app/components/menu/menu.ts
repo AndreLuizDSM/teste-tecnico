@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +17,7 @@ import { User } from '../../services/user';
     MatIconModule
   ],
   templateUrl: './menu.html',
-  styleUrl: './menu.scss'
+  styleUrl: './menu.scss',
 })
 export class Menu {
 
@@ -37,6 +37,7 @@ export class Menu {
   }
 
   logout() {
+    console.log('usuário deslogado, token removido')
     this.userService.logout()
   }
 }
