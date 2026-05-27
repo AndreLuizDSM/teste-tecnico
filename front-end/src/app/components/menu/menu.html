@@ -1,1 +1,23 @@
-<p>menu works!</p>
+<mat-toolbar>
+
+  <a routerLink="/">
+    Teste-tecnico
+  </a>
+
+  <span class="spacer"></span>
+
+  @if (!isLoggedIn) {
+    <button mat-button routerLink="/login">Entrar</button>
+    <button mat-button routerLink="/register">Cadastrar</button>
+
+}
+
+  @if (isLoggedIn) {
+    <span>{{ userEmail }}</span>
+    <button mat-stroked-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
+  }
+
+</mat-toolbar>
