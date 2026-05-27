@@ -1,23 +1,23 @@
-<nav>
+<mat-toolbar>
+
   <a routerLink="/">
-    <i class="ti ti-check"></i> TaskApp
+    Teste-tecnico
   </a>
 
-  <div class="nav-actions">
+  <span class="spacer"></span>
 
-    <!-- Deslogado -->
-    <ng-container *ngIf="!isLoggedIn">
-      <button routerLink="/login">Entrar</button>
-      <button routerLink="/register">Cadastrar</button>
-    </ng-container>
+  @if (!isLoggedIn) {
+    <button mat-button routerLink="/login">Entrar</button>
+    <button mat-button routerLink="/register">Cadastrar</button>
 
-    <!-- Logado -->
-    <ng-container *ngIf="isLoggedIn">
-      <span>{{ userEmail }}</span>
-      <button (click)="logout()">
-        <i class="ti ti-logout"></i> Sair
-      </button>
-    </ng-container>
+}
 
-  </div>
-</nav>
+  @if (isLoggedIn) {
+    <span>{{ userEmail }}</span>
+    <button mat-stroked-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
+  }
+
+</mat-toolbar>

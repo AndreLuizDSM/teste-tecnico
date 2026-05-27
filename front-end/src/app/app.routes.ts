@@ -4,7 +4,7 @@ import { Login } from './components/login/login';
 import { Home } from './components/home/home';
 
 export const routes: Routes = [
-  {path: '' , component: Home}
+  {path: '' , component: Home},
   {path: 'register', component: Register},
   {path: 'login', component: Login}
 ];
