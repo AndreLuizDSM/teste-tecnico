@@ -1,0 +1,41 @@
+.home-wrapper {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+
+  .welcome {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+
+    mat-card {
+      max-width: 480px;
+      width: 100%;
+
+      mat-card-actions {
+        display: flex;
+        gap: 8px;
+        padding: 0 16px 16px;
+      }
+    }
+  }
+
+  .tasks-section {
+    .tasks-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    .no-tasks {
+      text-align: center;
+      padding: 2rem;
+      color: gray;
+    }
+  }
+}

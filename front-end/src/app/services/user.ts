@@ -22,7 +22,7 @@ export interface loginPayload {
 })
 export class User {
 
-   private apiUrl = "http://localhost:8080/";
+  private apiUrl = "http://localhost:8080/";
   private jwtService = new JwtHelperService;
 
   // Signal para eu poder atualizar dados e as tasks em tempo real
