@@ -163,35 +163,4 @@ class TaskServiceTest {
         verifyNoMoreInteractions(taskRepository);
     }
 
-                        // updateTask
-
-    @Test
-    void updateTaskSucessed() {
-        when(taskRepository.findById(taskId)).thenReturn(Optional.of(taskEntity));
-        when(taskRepository.save(taskEntity)).thenReturn(savedEntity);
-        when(mapper.entityToResponse(savedEntity)).thenReturn(taskResponseDTO);
-
-        TaskResponseDTO result = taskService.updateTask(taskRequestDTO, taskId);
-
-        assertNotNull(result);
-        assertEquals("Tarefa 1", result.name());
-
-
-        verify(taskRepository).save(taskEntity);
-        verifyNoMoreInteractions(taskRepository);
-    }
-
-    @Test
-    void updateTask_naoEncontrado_lancaResourceNotFoundException() {
-        when(taskRepository.findById(taskId)).thenThrow(
-                new ResourceNotFoundException("Tarefa não encontrada: " + taskId));
-
-        ResourceNotFoundException e = assertThrows(ResourceNotFoundException.class,
-                () -> taskService.updateTask(taskRequestDTO, taskId));
-
-        assertThat(e, notNullValue());
-        assertThat(e.getMessage(), is("Tarefa não encontrada: " + taskId));
-
-        verifyNoMoreInteractions(taskRepository, mapper);
-    }
 }

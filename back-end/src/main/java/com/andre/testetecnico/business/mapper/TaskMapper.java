@@ -13,6 +13,4 @@ public interface TaskMapper {
 
     TaskResponseDTO entityToResponse(TaskEntity entity);
 
-    // Faz as alterações sem precisar fazer uma nova instancia
-    void updateEntity(TaskRequestDTO dto, @MappingTarget TaskEntity entity);
 }

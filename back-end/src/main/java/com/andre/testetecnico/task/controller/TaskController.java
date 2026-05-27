@@ -36,10 +36,5 @@ public class TaskController {
         service.deleteTask  (id);
         return ResponseEntity.ok().build();
     }
-
-    @PutMapping
-    public ResponseEntity<TaskResponseDTO> alteraTarefa (@RequestBody TaskRequestDTO tarefaDTO,
-                                                   @RequestParam("id") String id) {
-        return ResponseEntity.ok(service.updateTask(tarefaDTO, id));
-    }
+    
 }
