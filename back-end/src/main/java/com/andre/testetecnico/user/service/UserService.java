@@ -55,6 +55,7 @@ public class UserService {
             );
 
             // Se o userDto for incorreto , a requisição cairá no catch antes do return.
+            log.info("Login feito: " + authentication.getName());
             return "Bearer " + jwtUtil.generateToken(authentication.getName());
 
         } catch (BadCredentialsException | UsernameNotFoundException e) {
@@ -69,7 +70,7 @@ public class UserService {
                 ()-> new ResourceNotFoundException("Usuário não encontrado " + email)
         );
 
-        log.info("Usuário retornado: " + entity);
+        log.info("Usuário retornado: " + entity.getName());
         return mapper.entityToResponse(entity);
     }
 

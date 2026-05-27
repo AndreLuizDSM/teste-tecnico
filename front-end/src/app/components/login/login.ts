@@ -5,7 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { User } from '../../services/user';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -25,16 +27,45 @@ export class Login {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+  constructor(private formBuilder: FormBuilder,
+              private userService: User,
+              private authService: Auth,
+              private router: Router
+  ) {
+     this.loginForm = this.formBuilder.group({
+      email: this.formBuilder.control('', {validators: [Validators.required, Validators.email], nonNullable: true}),
+      password: this.formBuilder.control('', {validators: [Validators.required], nonNullable: true})
     });
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-    }
+
+    const formData = this.loginForm.value
+
+    console.log(formData)
+
+    this.userService.login(formData).subscribe({
+      next: (response) => {
+
+        // Salva o token
+        this.authService.saveToken(response),
+        console.log("Usuário logado ")
+
+        // Usa o método GET da service
+        this.userService.getUserByEmail(response).subscribe({
+        next: (user) => {
+          // Salva no localStorage e no Signal
+          this.authService.saveUser(user),
+          this.userService.setUser(user),
+          console.log("Usuário pego após login: " , user)
+
+          // Leva para a homepage
+          this.router.navigate(['/'])
+        }
+        })
+      },
+
+      error: (erro) => console.log('Erro ao fazer login: ', erro)
+    })
   }
 }

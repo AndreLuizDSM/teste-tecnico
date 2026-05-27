@@ -5,7 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { User } from '../../services/user';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-register',
@@ -25,17 +27,31 @@ export class Register {
 
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+  constructor(private formBuilder: FormBuilder,
+              private userService: User,
+              private authService: Auth,
+              private router: Router
+  ) {
+
+    this.registerForm = this.formBuilder.group({
+      name: this.formBuilder.control('', {validators: [Validators.required], nonNullable: true}),
+      email: this.formBuilder.control('', {validators: [Validators.required, Validators.email], nonNullable: true}),
+      password: this.formBuilder.control('', {validators: [Validators.required], nonNullable: true})
     });
   }
 
   onSubmit() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-    }
+
+    // Valor do form
+    const formData = this.registerForm.value;
+
+    // Registra o usuário e leva ele para a tela de login
+    this.userService.register(formData).subscribe({
+
+      next: (response) => { this.router.navigate(['/login']),
+        console.log("Usuário registrado " , response)
+       },
+      error: (error) => { console.log('Erro ao registrar usuário', error) },
+    })
   }
 }

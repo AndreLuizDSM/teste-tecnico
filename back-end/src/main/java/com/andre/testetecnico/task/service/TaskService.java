@@ -67,18 +67,6 @@ public class TaskService {
         log.info("Tarefa deletada com sucesso: "+ id);
     }
 
-    public TaskResponseDTO updateTask(TaskRequestDTO dto, String id) {
-        log.info("Atualizando tarefa id: " + id);
-
-        TaskEntity task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Tarefa não encontrada: " + id));
-
-        mapper.updateEntity(dto, task);
-
-        log.info("Tarefa atualizada com sucesso: " + id);
-        return mapper.entityToResponse(taskRepository.save(task));
-    }
-
     //Extrair email do token
     private String getEmailFromToken(String token){
         return jwtUtil.extrairEmailToken(token.substring(7));
