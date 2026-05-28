@@ -27,7 +27,6 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<List<TaskResponseDTO>> buscaListaDeTarefaPorEmail(@RequestHeader("Authorization")String token){
 
-        //List<TarefaDTO> listaDto = tarefaService.buscarTarefaGravadaPorEmail(token); Jeito simples
         return ResponseEntity.ok(service.findTask(token));
     }
 

@@ -29,27 +29,31 @@ public class TaskService {
 
     public TaskResponseDTO saveTask(TaskRequestDTO dto, String token) {
         String email = getEmailFromToken(token);
-        log.info("Criando tarefa para o usuário: " + email);
+        log.info("Criando tarefa para o usuario: " + email);
 
         UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UnauthorizedException("Usuário não encontrado: " + email));
+                .orElseThrow(() -> new UnauthorizedException("Usuario nao encontrado: " + email));
 
 
         TaskEntity task = mapper.requestToEntity(dto);
         task.setUser(user);
+        // LocalDateTime passa um timeStamp
         task.setCreatedDate(LocalDateTime.now());
 
-        log.info("Tarefa criada para o usuário: " + email);
+        log.info("Tarefa criada para o usuario: " + email);
         return mapper.entityToResponse(taskRepository.save(task));
     }
 
     public List<TaskResponseDTO> findTask(String token) {
         String email = getEmailFromToken(token);
-        log.info("Buscando tarefas do usuário: " + email);
+        log.info("Buscando tarefas do usuario: " + email);
 
         UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UnauthorizedException("Usuário não encontrado: " + email));
+                .orElseThrow(() -> new UnauthorizedException("Usuario nao encontrado: " + email));
 
+        log.info("Tarefas encontradas ");
+
+        // findByUser já retorna uma lista, faz o stream paga pegar as listas passando para Response.
         return taskRepository.findByUser(user)
                 .stream()
                 .map(mapper::entityToResponse)
@@ -60,14 +64,14 @@ public class TaskService {
         log.info("Deletando tarefa id: " + id);
 
         if (!taskRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Tarefa não encontrada: " + id);
+            throw new ResourceNotFoundException("Tarefa nao encontrada: " + id);
         }
 
         taskRepository.deleteById(id);
         log.info("Tarefa deletada com sucesso: "+ id);
     }
 
-    //Extrair email do token
+    // Extrair email do token, substring para tirar o "Bearer "
     private String getEmailFromToken(String token){
         return jwtUtil.extrairEmailToken(token.substring(7));
     }

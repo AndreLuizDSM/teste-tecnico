@@ -94,13 +94,13 @@ class TaskServiceTest {
         // Substring para retirar o "Bearer "
         when(jwtUtil.extrairEmailToken(token.substring(7))).thenReturn(email);
         when(userRepository.findByEmail(email)).thenThrow(
-                new UnauthorizedException("Usuário não encontrado: " + email));
+                new UnauthorizedException("Usuario nao encontrado: " + email));
 
         UnauthorizedException e = assertThrows(UnauthorizedException.class,
                 () -> taskService.saveTask(taskRequestDTO, token));
 
         assertThat(e, notNullValue());
-        assertThat(e.getMessage(), is("Usuário não encontrado: " + email));
+        assertThat(e.getMessage(), is("Usuario nao encontrado: " + email));
 
         verifyNoMoreInteractions(userRepository, taskRepository);
     }
@@ -127,13 +127,13 @@ class TaskServiceTest {
     void findTask_throwUnauthorizedException() {
         when(jwtUtil.extrairEmailToken(token.substring(7))).thenReturn(email);
         when(userRepository.findByEmail(email)).thenThrow(
-                new UnauthorizedException("Usuário não encontrado: " + email));
+                new UnauthorizedException("Usuario nao encontrado: " + email));
 
         UnauthorizedException e = assertThrows(UnauthorizedException.class,
                 () -> taskService.findTask(token));
 
         assertThat(e, notNullValue());
-        assertThat(e.getMessage(), is("Usuário não encontrado: " + email));
+        assertThat(e.getMessage(), is("Usuario nao encontrado: " + email));
 
         verifyNoMoreInteractions(userRepository, taskRepository);
     }
@@ -152,13 +152,13 @@ class TaskServiceTest {
     @Test
     void deleteTask_throwResourceNotFoundException() {
         when(taskRepository.existsById(taskId)).thenThrow(
-                new ResourceNotFoundException("Tarefa não encontrada: " + taskId));
+                new ResourceNotFoundException("Tarefa nao encontrada: " + taskId));
 
         ResourceNotFoundException e = assertThrows(ResourceNotFoundException.class,
                 () -> taskService.deleteTask(taskId));
 
         assertThat(e, notNullValue());
-        assertThat(e.getMessage(), is("Tarefa não encontrada: " + taskId));
+        assertThat(e.getMessage(), is("Tarefa nao encontrada: " + taskId));
 
         verifyNoMoreInteractions(taskRepository);
     }
