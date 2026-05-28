@@ -94,7 +94,7 @@ class UserServiceTest {
                 () -> userService.saveUser(userRequestDTO));
 
         assertThat(e, notNullValue());
-        assertThat(e.getMessage(), is("Conta já existe " + userRequestDTO.email()));
+        assertThat(e.getMessage(), is("Conta ja existe " + userRequestDTO.email()));
 
         verifyNoMoreInteractions(repository, mapper);
     }
@@ -146,13 +146,14 @@ class UserServiceTest {
 
     @Test
     void returnUser_naoEncontrado_lancaResourceNotFoundException() {
-        when(repository.findByEmail(userRequestDTO.email())).thenThrow(new ResourceNotFoundException("Usuário não encontrado " + userRequestDTO.email()));
+        when(repository.findByEmail(userRequestDTO.email())).thenThrow(new ResourceNotFoundException("Usuario " +
+                "nao encontrado " + userRequestDTO.email()));
 
         ResourceNotFoundException e = assertThrows(ResourceNotFoundException.class,
                 () -> userService.returnUser(userRequestDTO.email()));
 
         assertThat(e, notNullValue());
-        assertThat(e.getMessage(), is("Usuário não encontrado " + userRequestDTO.email()));
+        assertThat(e.getMessage(), is("Usuario nao encontrado " + userRequestDTO.email()));
 
         verifyNoMoreInteractions(repository);
     }
@@ -171,13 +172,13 @@ class UserServiceTest {
     @Test
     void deleteUser_throwResourceNotFoundException() {
         when(repository.existsByEmail(userRequestDTO.email())).thenThrow(
-               new ResourceNotFoundException("Usuário não encontrado " + userRequestDTO.email()));
+               new ResourceNotFoundException("Usuario nao encontrado " + userRequestDTO.email()));
 
         ResourceNotFoundException e = assertThrows(ResourceNotFoundException.class,
                 () -> userService.deleteUser(userRequestDTO.email()));
 
         assertThat(e, notNullValue());
-        assertThat(e.getMessage(), is("Usuário não encontrado " + userRequestDTO.email()));
+        assertThat(e.getMessage(), is("Usuario nao encontrado " + userRequestDTO.email()));
 
         verifyNoMoreInteractions(repository);
     }

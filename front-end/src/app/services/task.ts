@@ -50,10 +50,10 @@ export class Task {
     this.http.get<TaskResponse[]>(`${this.apiUrl}task`, { headers: this.getHeaders()  })
       .subscribe({
         next: tasks => {this._task.set(tasks),
-                        console.log('método get com sucesso')
+                        console.log('getTask feito com sucesso')
         },
         error: () => {this._task.set([]),
-                    console.log('método get com sucesso')
+                    console.log('getTask sem sucesso')
         }
       })
   }

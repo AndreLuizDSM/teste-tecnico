@@ -34,8 +34,9 @@ public class UserService {
 
     public UserResponseDTO saveUser(UserRequestDTO dto){
 
+        log.info("Verificar email recebido para Registro: " + dto.email());
         if (repository.existsByEmail(dto.email())) {
-            throw new BadRequestException("Conta já existe " + dto.email());
+            throw new BadRequestException("Conta ja existe " + dto.email());
         }
 
         UserEntity entity = mapper.requestToEntity(dto);
@@ -46,6 +47,7 @@ public class UserService {
     }
 
     public String loginUser(UserLoginDTO userDto){
+        log.info("Verificar email recebido para Login: " + userDto.email());
         try {
 
             //AuthenticationManager compara os valores de userDto com o do banco de dados,usando loadByUserName
@@ -65,19 +67,19 @@ public class UserService {
 
     public UserResponseDTO returnUser(String email){
 
-        log.info("Procurando email: " + email);
+        log.info("Procurando email para retorno: " + email);
         UserEntity entity = repository.findByEmail(email).orElseThrow(
-                ()-> new ResourceNotFoundException("Usuário não encontrado " + email)
+                ()-> new ResourceNotFoundException("Usuario nao encontrado " + email)
         );
 
-        log.info("Usuário retornado: " + entity.getName());
+        log.info("Usuario retornado: " + entity.getName());
         return mapper.entityToResponse(entity);
     }
 
     public void deleteUser(String email){
-
+        log.info("Verificar email para Delete: " + email);
         if(!repository.existsByEmail(email)) {
-            throw new ResourceNotFoundException("Usuário não encontrado " + email);
+            throw new ResourceNotFoundException("Usuario nao encontrado " + email);
         }
 
         log.info("Email para delete: "+ email);
